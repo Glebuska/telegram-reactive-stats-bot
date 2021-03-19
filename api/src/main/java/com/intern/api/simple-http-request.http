@@ -1,0 +1,10 @@
+# curl localhost:8080/hello-world
+GET localhost:8080/hello-world
+
+###
+
+# curl localhost:8080/actuator/health
+GET localhost:8080/actuator/health
+
+###
+
