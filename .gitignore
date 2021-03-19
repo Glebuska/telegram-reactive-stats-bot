@@ -3,7 +3,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-
+### MAC DIR ###
+.DS_Store
 
 ### STS ###
 .apt_generated
