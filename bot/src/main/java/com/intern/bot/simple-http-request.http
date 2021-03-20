@@ -1,0 +1,10 @@
+###
+
+GET http://telegram-reactive-stats-bot-bot.us-east-2.elasticbeanstalk.com/hello-world
+
+###
+
+GET http://telegram-reactive-stats-bot-bot.us-east-2.elasticbeanstalk.com/actuator/health
+
+###
+
