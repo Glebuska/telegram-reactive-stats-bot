@@ -26,7 +26,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.4</version>
+        <version>${spring.framework.version}</version>
     </parent>
 
     <dependencyManagement>
@@ -42,7 +42,10 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
             <version>${spring.framework.version}</version>
         </dependency>
+    </dependencies>
+    </dependencyManagement>
 
+    <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -50,7 +53,7 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-    </dependencyManagement>
+
 
     <build>
         <plugins>
