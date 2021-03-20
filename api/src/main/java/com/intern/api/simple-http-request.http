@@ -1,0 +1,10 @@
+###
+GET http://telegramreactivebotapi-env.eba-aep4pids.us-east-2.elasticbeanstalk.com/hello-world
+
+###
+
+# curl localhost:5000/actuator/health
+GET http://telegramreactivebotapi-env.eba-aep4pids.us-east-2.elasticbeanstalk.com/actuator/health
+
+###
+
