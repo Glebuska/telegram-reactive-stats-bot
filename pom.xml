@@ -10,6 +10,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <spring.framework.version>2.4.4</spring.framework.version>
         <lombok.version>1.18.16</lombok.version>
+        <beanstalk-maven-plugin.version>1.5.6</beanstalk-maven-plugin.version>
     </properties>
 
     <groupId>com.intern</groupId>
@@ -61,6 +62,13 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                    <groupId>br.com.ingenieux</groupId>
+                    <artifactId>beanstalk-maven-plugin</artifactId>
+                    <version>${beanstalk-maven-plugin.version}</version>
+            </plugin>
+
         </plugins>
     </build>
 
