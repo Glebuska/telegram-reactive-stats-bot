@@ -1,5 +1,6 @@
-package com.intern.bot;
+package com.intern.bot.controller;
 
+import com.intern.bot.service.Greeting;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

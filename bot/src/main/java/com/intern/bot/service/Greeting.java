@@ -1,4 +1,4 @@
-package com.intern.bot;
+package com.intern.bot.service;
 
 import lombok.Data;
 
