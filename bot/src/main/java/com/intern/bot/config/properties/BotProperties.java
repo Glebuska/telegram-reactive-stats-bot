@@ -1,14 +1,19 @@
-package com.intern.bot.service;
+package com.intern.bot.config.properties;
 
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 @Slf4j
-public class MyBot extends TelegramLongPollingBot {
+@Configuration
+public class BotProperties extends TelegramLongPollingBot {
 
-  private static final Map<String, String> getenv = System.getenv();
+  @Value("${bot.token}")
+  private String token;
+  @Value("${bot.username}")
+  private String username;
 
   @Override
   public void onUpdateReceived(Update update) {
@@ -21,13 +26,12 @@ public class MyBot extends TelegramLongPollingBot {
 
   @Override
   public String getBotUsername() {
-    return "GridInternBot";
+    return username;
   }
 
   @Override
   public String getBotToken() {
-    //TODO HIDDEN KEEP TOKEN?
-    return "1716055129:AAHWA-utqyyw6DVNYB_TGAHDnU2jPNHLV7o";
+    return token;
   }
 
 }
