@@ -3,5 +3,5 @@ server:
   port: 5000
 
 bot:
-  token: "1716055129:AAHWA-utqyyw6DVNYB_TGAHDnU2jPNHLV7o"
-  username: "GridInternBot"
+  token: ${BOT_TOKEN}
+  username: ${BOT_NAME}
