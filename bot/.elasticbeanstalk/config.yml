@@ -1,0 +1,21 @@
+branch-defaults:
+  default:
+    environment: bot-env
+environment-defaults:
+  bot-env:
+    branch: null
+    repository: null
+deploy:
+   artifact: target/bot-1.0-SNAPSHOT.jar
+global:
+  application_name: telegram-reactive-stats-bot
+  default_ec2_keyname: aws-eb
+  default_platform: Corretto 11 running on 64bit Amazon Linux 2
+  default_region: us-east-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: eb-cli
+  sc: null
+  workspace_type: Application

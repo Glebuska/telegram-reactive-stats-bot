@@ -1,0 +1,3 @@
+#AWS working on this port
+server:
+  port: 5000

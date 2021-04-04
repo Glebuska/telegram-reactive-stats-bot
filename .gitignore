@@ -16,10 +16,13 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+*.http
+.idea/*
 *.iws
 *.iml
 *.ipr
+!*/codeStyles/*
+!*/google-java-format.xml
 
 ### NetBeans ###
 /nbproject/private/
