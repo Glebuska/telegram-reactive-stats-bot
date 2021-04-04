@@ -16,14 +16,9 @@ public class TelegramConfig {
   private final TelegramBot bot;
 
   @Bean
-  public TelegramBotsApi registerBot() {
-    TelegramBotsApi botsApi = null;
-    try {
-      botsApi = new TelegramBotsApi(DefaultBotSession.class);
-      botsApi.registerBot(bot);
-    } catch (TelegramApiException e) {
-      log.error("Could not initialize telegram bot API.", e);
-    }
+  public TelegramBotsApi registerBot() throws TelegramApiException {
+    TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
+    botsApi.registerBot(bot);
 
     return botsApi;
   }
