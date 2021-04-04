@@ -3,7 +3,6 @@ package com.intern.bot.config;
 import com.intern.bot.config.properties.BotProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -11,7 +10,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-@EnableConfigurationProperties(BotProperties.class)
 public class TelegramBot extends TelegramLongPollingBot {
 
   private final BotProperties botProperties;
@@ -32,7 +30,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
   @Override
   public String getBotToken() {
-    return botProperties.getUsername();
+    return botProperties.getToken();
   }
 
 }
