@@ -1,11 +1,10 @@
 #!/bin/bash
 
 Modules=('api' 'bot' 'storage')
+mvn clean install
 
 for i in "${Modules[@]}"; do
   cd $i
-  mvn clean install
   eb deploy
   cd ..
-  done
-
+done
