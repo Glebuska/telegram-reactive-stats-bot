@@ -5,3 +5,6 @@ server:
 bot:
   token: ${BOT_TOKEN}
   username: ${BOT_NAME}
+
+kafka:
+  server: localhost:9092
