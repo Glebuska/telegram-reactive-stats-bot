@@ -1,7 +1,8 @@
 package com.intern.api.controller;
 
 import com.intern.api.client.DataBaseClient;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -18,18 +20,35 @@ public class MongoController {
 
   final DataBaseClient mongoDataBaseClient;
 
-  @DeleteMapping("/{id}")
-  public @ResponseBody Document deleteById(@PathVariable Long id) {
+  @DeleteMapping
+  public @ResponseBody Document deleteMessageById(@RequestParam("id") Long id) {
     return mongoDataBaseClient.deleteMessage(id);
   }
 
   @GetMapping
-  public @ResponseBody ArrayList<Document> getAllMessage() {
+  public @ResponseBody List<Document> getAllMessage() {
     return mongoDataBaseClient.getMessages();
   }
 
   @GetMapping("/{id}")
-  public @ResponseBody ArrayList<Document> getMessagesInChat(@PathVariable Long id) {
-    return mongoDataBaseClient.getMessagesInChat(id);
+  public @ResponseBody List<Document> getMessagesByChatId(@PathVariable Long id) {
+    return mongoDataBaseClient.getMessagesByChatId(id);
+  }
+
+  @GetMapping("/top/{size}")
+  public @ResponseBody List<Document> getTopUsers(
+      @PathVariable int size,
+      @RequestParam(value = "chatId", required = false) Optional<Integer> chatId) {
+    return mongoDataBaseClient.getTopUsers(size, chatId);
+  }
+
+  @GetMapping("/oldMessages/{userId}")
+  public @ResponseBody List<Document> getPreviousMessages(@PathVariable Long userId) {
+    return mongoDataBaseClient.getPreviousMessages(userId);
+  }
+
+  @GetMapping("/user/{userName}")
+  public @ResponseBody Document getPreviousMessages(@PathVariable String userName) {
+    return mongoDataBaseClient.getUserInfo(userName);
   }
 }
