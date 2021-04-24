@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/mongo")
-public class MongoController {
+public class MessageController {
 
   final DataBaseClient mongoDataBaseClient;
 
@@ -36,15 +36,16 @@ public class MongoController {
   }
 
   @GetMapping("/top/{size}")
-  public @ResponseBody List<Document> getTopUsers(
+  public @ResponseBody List<Document> getTopUsersByMessageAmount(
       @PathVariable int size,
       @RequestParam(value = "chatId", required = false) Optional<Integer> chatId) {
-    return mongoDataBaseClient.getTopUsers(size, chatId);
+    return mongoDataBaseClient.getTopUsersByMessageAmount(size, chatId);
   }
 
   @GetMapping("/oldMessages/{userId}")
-  public @ResponseBody List<Document> getPreviousMessages(@PathVariable Long userId) {
-    return mongoDataBaseClient.getPreviousMessages(userId);
+  public @ResponseBody List<Document> getPreviousMessages(
+      @PathVariable Long userId, @RequestParam(value = "limit", defaultValue = "10") int limit) {
+    return mongoDataBaseClient.getPreviousMessages(userId, limit);
   }
 
   @GetMapping("/user/{userName}")

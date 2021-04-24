@@ -21,6 +21,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -44,34 +45,23 @@ public class DataBaseClient {
     return collection.find(eq("chat.id", chatId)).into(new ArrayList<>());
   }
 
-  public List<Document> getPreviousMessages(Long userId) {
-    return collection.find(eq("from.id", userId)).limit(10).into(new ArrayList<>());
+  public List<Document> getPreviousMessages(Long userId, int limitAmount) {
+    return collection.find(eq("from.id", userId)).limit(limitAmount).into(new ArrayList<>());
   }
 
   public Document getUserInfo(String username) {
     return collection.find(eq("from.username", username)).first().get("from", Document.class);
   }
 
-  public List<Document> getTopUsers(int N, Optional<Integer> chatId) {
-    if (chatId.isEmpty()) {
+  public List<Document> getTopUsersByMessageAmount(int N, Optional<Integer> chatId) {
+    List<Bson> aggregateFun =
+        Arrays.asList(
+            group("$from.username", first("username", "$from.username"), sum("count", 1)),
+            project(fields(include("username", "count"), excludeId())),
+            sort(Sorts.descending("count")),
+            limit(N));
 
-      return collection
-          .aggregate(
-              Arrays.asList(
-                  group("$from.username", first("username", "$from.username"), sum("count", 1)),
-                  project(fields(include("username", "count"), excludeId())),
-                  sort(Sorts.descending("count")),
-                  limit(N)))
-          .into(new ArrayList<>());
-    }
-    return collection
-        .aggregate(
-            Arrays.asList(
-                match(eq("chat.id", chatId.get())),
-                group("$from.username", first("username", "$from.username"), sum("count", 1)),
-                project(fields(include("username", "count"), excludeId())),
-                sort(Sorts.descending("count")),
-                limit(N)))
-        .into(new ArrayList<>());
+    chatId.ifPresent(integer -> aggregateFun.add(0, match(eq("chat.id", integer))));
+    return collection.aggregate(aggregateFun).into(new ArrayList<>());
   }
 }
