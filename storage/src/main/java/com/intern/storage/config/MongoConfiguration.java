@@ -19,6 +19,6 @@ public class MongoConfiguration {
   public MongoCollection<Document> getMongoCollection() {
     final MongoClient mongoClient = new MongoClient();
     final MongoDatabase database = mongoClient.getDatabase(mongoProp.getDatabase());
-    return database.getCollection(mongoProp.getCollectioTelegramBot.javan());
+    return database.getCollection(mongoProp.getCollection());
   }
 }

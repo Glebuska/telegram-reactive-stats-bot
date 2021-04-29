@@ -5,3 +5,5 @@ server:
 mongodb:
   database: "mydb"
   collection: "message"
+
+#logging.level.org.mongodb: debug
