@@ -2,6 +2,7 @@ package com.intern.storage.config;
 
 import com.intern.storage.config.properties.MongoProperties;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,10 @@ public class MongoConfiguration {
 
   @Bean
   public MongoCollection<Document> getMongoCollection() {
-    final MongoClient mongoClient = new MongoClient();
+    final MongoClientURI uri =
+        new MongoClientURI(
+            "mongodb://gmirzazyanov:52ucZPU6EGXkhdw@cluster0-shard-00-00.m0dqp.mongodb.net:27017,cluster0-shard-00-01.m0dqp.mongodb.net:27017,cluster0-shard-00-02.m0dqp.mongodb.net:27017/mydb?ssl=true&replicaSet=atlas-31x190-shard-0&authSource=admin&retryWrites=true&w=majority");
+    final MongoClient mongoClient = new MongoClient(uri);
     final MongoDatabase database = mongoClient.getDatabase(mongoProp.getDatabase());
     return database.getCollection(mongoProp.getCollection());
   }

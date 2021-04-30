@@ -1,7 +1,14 @@
 #AWS working on this port
 server:
-  port: 8081
+  port: 8080
 
 mongodb:
   database: "mydb"
   collection: "message"
+
+spring:
+  kafka:
+    bootstrap-servers: 10.132.0.2:9092
+
+kafka:
+  server: 10.132.0.2:9092

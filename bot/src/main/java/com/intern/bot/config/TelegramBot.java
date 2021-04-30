@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intern.bot.config.properties.BotProperties;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -21,13 +20,12 @@ public class TelegramBot extends TelegramLongPollingBot {
   private final KafkaTemplate<String, Object> kafkaTemplate;
   private final ObjectMapper objectMapper;
 
-  @SneakyThrows
   @Override
   public void onUpdateReceived(Update update) {
     // We check if the update has a message and the message has text
     if (update.hasMessage() && update.getMessage().hasText()) {
       Message inputMessage = update.getMessage();
-      kafkaTemplate.send("topic2", writeValueAsString(inputMessage));
+      kafkaTemplate.send("mytopic", writeValueAsString(inputMessage));
     }
   }
 
