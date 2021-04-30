@@ -1,11 +1,13 @@
 runtime: java11
 env: standard
-service: api
+service: bot
 runtime_config:
   jdk: openjdk11
+env_variables:
+  BOT_TOKEN: 1716055129:AAGQCbJastoX__XvV4pXxaKPSYVXuubuOt8
+  BOT_NAME: GridInternBot
 handlers:
   - url: /.*
     script: this field is required, but ignored
 manual_scaling:
   instances: 1
-  

@@ -1,14 +1,16 @@
 #AWS working on this port
 server:
-  port: 5000
+  port: 8080
 
 bot:
   token: ${BOT_TOKEN}
   username: ${BOT_NAME}
 
-#spring:
-#  kafka:
-#    bootstrap-servers: localhost:9092
-
 kafka:
   server: 35.195.168.206:9092
+
+management:
+  health:
+    diskspace:
+      enabled: false
+      

@@ -1,15 +1,16 @@
 # telegram-reactive-stats-bot
+
 Internship project
 
 ## Deploy
-This project deploy in AWS ES. Follow next steps to get opportunity to auto deploy:
 
-1) Download the Elastic Beanstalk CLI tool from
-[here](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install.html)
-2) You need get info about your "Access Key ID" and "Secret Access Key" read
-[this](https://aws.amazon.com/blogs/security/wheres-my-secret-access-key/#:~:text=Secret%20access%20keys%20are%E2%80%94as,key%20after%20its%20initial%20creation.)
+This project deploy in Google Cloud App Engine. Follow next steps to get opportunity to auto deploy:
 
-To deploy all modules write: 
+1) Download the Google Cloud SDK from
+   [here](https://cloud.google.com/sdk/docs/install)
+2) Log in and chose correct project name
+
+To deploy all modules write:
 
 ```
 ./deploy
@@ -18,11 +19,23 @@ To deploy all modules write:
 To deploy single module:
 
 ```
-cd <module_name> && eb deploy
+cd <module_name> && mvn clean package appengine:deploy
 ```
 
-To see deployment info write this at one of module directory:
+You can stream logs from the command line by running:
 
 ```
-eb console 
+gcloud app logs tail -s <module_name>
+```
+
+To view your application in the web browser run:
+
+```
+gcloud app browse -s <module_name>
+```
+
+To stop all instance with equal version:
+
+```
+gcloud app versions stop <number_of_version>
 ```

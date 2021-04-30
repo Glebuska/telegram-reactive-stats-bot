@@ -1,2 +1,10 @@
 runtime: java11
-instance_class: F4
+env: standard
+service: storage
+runtime_config:
+  jdk: openjdk11
+handlers:
+  - url: /.*
+    script: this field is required, but ignored
+manual_scaling:
+  instances: 1
