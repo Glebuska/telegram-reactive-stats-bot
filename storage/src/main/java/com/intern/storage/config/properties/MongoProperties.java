@@ -10,4 +10,5 @@ import org.springframework.context.annotation.Configuration;
 public class MongoProperties {
   private String database;
   private String collection;
+  private String uri;
 }

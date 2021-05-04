@@ -15,7 +15,7 @@ import org.springframework.kafka.config.TopicBuilder;
 @RequiredArgsConstructor
 public class KafkaConsumer {
 
-  private final String topicName = "topic2";
+  private final String topicName = "mytopic";
   final MongoCollection<Document> collection;
 
   @Bean

@@ -2,6 +2,7 @@ package com.intern.storage.config;
 
 import com.intern.storage.config.properties.MongoProperties;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,8 @@ public class MongoConfiguration {
 
   @Bean
   public MongoCollection<Document> getMongoCollection() {
-    final MongoClient mongoClient = new MongoClient();
+    final MongoClientURI uri = new MongoClientURI(mongoProp.getUri());
+    final MongoClient mongoClient = new MongoClient(uri);
     final MongoDatabase database = mongoClient.getDatabase(mongoProp.getDatabase());
     return database.getCollection(mongoProp.getCollection());
   }

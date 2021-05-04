@@ -1,10 +1,10 @@
 #!/bin/bash
 
 Modules=('api' 'bot' 'storage')
-mvn clean install
+mvn clean package
 
 for i in "${Modules[@]}"; do
   cd $i
-  eb deploy
+  mvn appengine:deploy
   cd ..
 done

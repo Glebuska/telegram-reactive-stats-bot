@@ -5,5 +5,9 @@ server:
 mongodb:
   database: "mydb"
   collection: "message"
+  uri: "mongodb://34.78.196.126:27017"
 
-#logging.level.org.mongodb: debug
+management:
+  health:
+    diskspace:
+      enabled: false
