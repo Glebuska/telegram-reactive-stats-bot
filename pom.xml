@@ -12,6 +12,8 @@
     <lombok.version>1.18.16</lombok.version>
     <mongo.java.driver.version>3.4.1</mongo.java.driver.version>
     <spring.fox.version>3.0.0</spring.fox.version>
+    <spring-cloud-gcp.version>2.0.0</spring-cloud-gcp.version>
+    <spring-cloud.version>2020.0.0</spring-cloud.version>
   </properties>
 
   <groupId>com.intern</groupId>
@@ -56,7 +58,6 @@
         <artifactId>springfox-boot-starter</artifactId>
         <version>${spring.fox.version}</version>
       </dependency>
-
     </dependencies>
   </dependencyManagement>
 

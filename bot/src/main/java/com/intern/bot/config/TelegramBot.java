@@ -1,15 +1,16 @@
 package com.intern.bot.config;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.intern.bot.client.TelegramClient;
 import com.intern.bot.config.properties.BotProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -17,23 +18,29 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class TelegramBot extends TelegramLongPollingBot {
 
   private final BotProperties botProperties;
-  private final KafkaTemplate<String, Object> kafkaTemplate;
-  private final ObjectMapper objectMapper;
+
+  private final TelegramClient telegramClient;
 
   @Override
   public void onUpdateReceived(Update update) {
     // We check if the update has a message and the message has text
     if (update.hasMessage() && update.getMessage().hasText()) {
       Message inputMessage = update.getMessage();
-      kafkaTemplate.send("mytopic", writeValueAsString(inputMessage));
-    }
-  }
-
-  private String writeValueAsString(Message message) {
-    try {
-      return objectMapper.writeValueAsString(message);
-    } catch (JsonProcessingException e) {
-      throw new RuntimeException("Writing value to JSON failed: " + message.toString());
+      Mono<String> result = telegramClient.messageHandler(inputMessage);
+      if (result != null) {
+        result.subscribe(
+            text -> {
+              log.info(text);
+              SendMessage sendMessage = new SendMessage();
+              sendMessage.setChatId(inputMessage.getChatId().toString());
+              sendMessage.setText(text);
+              try {
+                execute(sendMessage);
+              } catch (TelegramApiException e) {
+                // just igonre, because spring will log it, right?
+              }
+            });
+      }
     }
   }
 

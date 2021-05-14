@@ -1,0 +1,6 @@
+spring:
+  kafka:
+    bootstrap-servers: 146.148.120.122:9092
+
+mongodb:
+  uri: "mongodb://34.78.196.126:27017"

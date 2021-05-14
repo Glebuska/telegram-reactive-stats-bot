@@ -1,0 +1,4 @@
+kafka:
+  server: localhost:9092
+
+uri: "http://localhost:8080"

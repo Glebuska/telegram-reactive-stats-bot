@@ -1,13 +1,15 @@
-#AWS working on this port
 server:
   port: 8080
 
 mongodb:
   database: "mydb"
   collection: "message"
-  uri: "mongodb://34.78.196.126:27017"
 
 management:
   health:
     diskspace:
       enabled: false
+
+spring:
+  profiles:
+    active: ${ACTIVE_PROFILE}
