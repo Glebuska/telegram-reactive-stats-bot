@@ -13,6 +13,6 @@ public class ClientConfig {
 
   @Bean
   public WebClient webClient() {
-    return WebClient.create(clientProperties.getUri());
+    return WebClient.create(clientProperties.getAddress());
   }
 }

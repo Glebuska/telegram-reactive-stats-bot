@@ -6,8 +6,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "api-server")
-public class ClientProperties {
+@ConfigurationProperties(prefix = "endpoint")
+public class EndpointProperties {
 
-  private String address;
+  private String topByMessageAmount;
+  private String info;
 }

@@ -1,11 +1,21 @@
 bot:
   token: ${BOT_TOKEN}
   username: ${BOT_NAME}
+  command:
+    topByMessageAmount: "/topByMessageAmount"
+    info: "/info"
+
+endpoint:
+  topByMessageAmount: "/mongo/top/5?chatId={chatId}"
+  info: "/mongo/user/{username}?chatId={chatId}"
 
 management:
   health:
     diskspace:
       enabled: false
+
+kafka:
+  topic: "mytopic"
 
 spring:
   sleuth:

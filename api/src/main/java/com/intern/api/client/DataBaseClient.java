@@ -50,28 +50,26 @@ public class DataBaseClient {
     return collection.find(eq("from.id", userId)).limit(limitAmount).into(new ArrayList<>());
   }
 
-  public Document getUserInfo(String username, Optional<Integer> charId) {
-    Document result;
-    if (charId.isPresent()) {
-      result =
-          collection
-              .find(and(eq("from.username", username), eq("chat.id", charId.get())))
-              .first()
-              .get("from", Document.class);
-    } else {
-      result = collection.find(eq("from.username", username)).first().get("from", Document.class);
-    }
-    return result;
+  public Document getUserInfo(String username, Optional<Integer> chatId) {
+
+    return chatId
+        .map(
+            chatId_ ->
+                collection
+                    .find(and(eq("from.username", username), eq("chat.id", chatId.get())))
+                    .first()
+                    .get("from", Document.class))
+        .orElse(collection.find(eq("from.username", username)).first().get("from", Document.class));
   }
 
-  public List<Document> getTopUsersByMessageAmount(int N, Optional<Integer> chatId) {
+  public List<Document> getTopUsersByMessageAmount(int topN, Optional<Integer> chatId) {
     List<Bson> aggregateFun =
         new ArrayList<>(
             Arrays.asList(
                 group("$from.username", first("username", "$from.username"), sum("count", 1)),
                 project(fields(include("username", "count"), excludeId())),
                 sort(Sorts.descending("count")),
-                limit(N)));
+                limit(topN)));
 
     chatId.ifPresent(value -> aggregateFun.add(0, match(eq("chat.id", value))));
     return collection.aggregate(aggregateFun).into(new ArrayList<>());

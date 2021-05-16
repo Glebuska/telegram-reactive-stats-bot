@@ -1,5 +1,6 @@
 package com.intern.bot.client;
 
+import com.intern.bot.config.properties.BotCommandProperties;
 import com.intern.bot.service.TelegramBotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,20 +11,21 @@ import reactor.core.publisher.Mono;
 @Service
 public class TelegramClient {
 
-  final TelegramBotService telegramBotService;
+  private final TelegramBotService telegramBotService;
+  private final BotCommandProperties botCommandProperties;
 
   public Mono<String> messageHandler(Message message) {
-    Mono<String> queryResult = null;
-    switch (message.getText()) {
-      case "/topByMessageAmount":
-        queryResult = telegramBotService.getTopByMessageAmount(message.getChatId());
-        break;
-      case "/info":
-        queryResult =
-            telegramBotService.getInfo(message.getFrom().getUserName(), message.getChatId());
-      default:
-        telegramBotService.saveMessage(message);
+    Mono<String> queryResult = Mono.empty();
+    String inputText = message.getText();
+    if (inputText.equals(botCommandProperties.getTopByMessageAmount())) {
+      queryResult = telegramBotService.getTopByMessageAmount(message.getChatId());
+    } else if (inputText.equals(botCommandProperties.getInfo())) {
+      queryResult =
+          telegramBotService.getInfo(message.getFrom().getUserName(), message.getChatId());
+    } else {
+      telegramBotService.saveMessage(message);
     }
+
     return queryResult;
   }
 }

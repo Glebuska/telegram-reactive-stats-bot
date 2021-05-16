@@ -2,7 +2,11 @@ package com.intern.bot.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.intern.bot.config.properties.EndpointProperties;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,11 +20,17 @@ public class TelegramBotService {
   private final WebClient webClient;
   private final ObjectMapper objectMapper;
   private final KafkaTemplate<String, Object> kafkaTemplate;
+  private final EndpointProperties endpointProperties;
+
+  @Getter
+  @Setter
+  @Value("${kafka.topic}")
+  private String topic;
 
   public Mono<String> getTopByMessageAmount(Long chatId) {
     return webClient
         .get()
-        .uri("/mongo/top/5?chatId={chatId}", chatId)
+        .uri(endpointProperties.getTopByMessageAmount(), chatId)
         .retrieve()
         .bodyToMono(String.class);
   }
@@ -28,13 +38,13 @@ public class TelegramBotService {
   public Mono<String> getInfo(String username, Long chatId) {
     return webClient
         .get()
-        .uri("/mongo/user/{username}?chatId={chatId}", username, chatId)
+        .uri(endpointProperties.getInfo(), username, chatId)
         .retrieve()
         .bodyToMono(String.class);
   }
 
   public void saveMessage(Message inputMessage) {
-    kafkaTemplate.send("mytopic", writeValueAsString(inputMessage));
+    kafkaTemplate.send(topic, writeValueAsString(inputMessage));
   }
 
   private String writeValueAsString(Message message) {

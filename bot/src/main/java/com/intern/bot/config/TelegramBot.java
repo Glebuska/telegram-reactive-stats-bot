@@ -27,20 +27,18 @@ public class TelegramBot extends TelegramLongPollingBot {
     if (update.hasMessage() && update.getMessage().hasText()) {
       Message inputMessage = update.getMessage();
       Mono<String> result = telegramClient.messageHandler(inputMessage);
-      if (result != null) {
-        result.subscribe(
-            text -> {
-              log.info(text);
-              SendMessage sendMessage = new SendMessage();
-              sendMessage.setChatId(inputMessage.getChatId().toString());
-              sendMessage.setText(text);
-              try {
-                execute(sendMessage);
-              } catch (TelegramApiException e) {
-                // just igonre, because spring will log it, right?
-              }
-            });
-      }
+      result.subscribe(
+          text -> {
+            log.info(text);
+            SendMessage sendMessage = new SendMessage();
+            sendMessage.setChatId(inputMessage.getChatId().toString());
+            sendMessage.setText(text);
+            try {
+              execute(sendMessage);
+            } catch (TelegramApiException e) {
+              log.error(e.getMessage(), e);
+            }
+          });
     }
   }
 

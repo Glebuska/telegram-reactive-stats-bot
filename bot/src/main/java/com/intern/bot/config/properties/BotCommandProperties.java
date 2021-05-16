@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "api-server")
-public class ClientProperties {
-
-  private String address;
+@ConfigurationProperties(prefix = "bot.command")
+public class BotCommandProperties {
+  private String info;
+  private String topByMessageAmount;
 }
