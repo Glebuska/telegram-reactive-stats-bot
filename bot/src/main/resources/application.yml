@@ -1,16 +1,30 @@
-#AWS working on this port
-server:
-  port: 8080
-
 bot:
   token: ${BOT_TOKEN}
   username: ${BOT_NAME}
+  command:
+    topByMessageAmount: "/topByMessageAmount"
+    info: "/info"
 
-kafka:
-  server: 35.195.168.206:9092
+endpoint:
+  topByMessageAmount: "/mongo/top/5?chatId={chatId}"
+  info: "/mongo/user/{username}?chatId={chatId}"
 
 management:
   health:
     diskspace:
       enabled: false
-      
+
+kafka:
+  topic: "mytopic"
+
+spring:
+  sleuth:
+    sampler:
+      probability: 1.0
+    web:
+      additional-skip-pattern: "(^cleanup.*|.+favicon.*)"
+  profiles:
+    active: ${ACTIVE_PROFILE}
+
+server:
+  port: 8081

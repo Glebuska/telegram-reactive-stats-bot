@@ -1,0 +1,5 @@
+kafka:
+  server: 146.148.120.122:9092
+
+api-server:
+  address: "https://api-dot-aerobic-amphora-312207.ew.r.appspot.com"

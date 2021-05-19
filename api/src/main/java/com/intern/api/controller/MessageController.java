@@ -49,7 +49,9 @@ public class MessageController {
   }
 
   @GetMapping("/user/{userName}")
-  public @ResponseBody Document getPreviousMessages(@PathVariable String userName) {
-    return mongoDataBaseClient.getUserInfo(userName);
+  public @ResponseBody Document getUserInfo(
+      @PathVariable String userName,
+      @RequestParam(value = "chatId", required = false) Optional<Integer> chatId) {
+    return mongoDataBaseClient.getUserInfo(userName, chatId);
   }
 }
