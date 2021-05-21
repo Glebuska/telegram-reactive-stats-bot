@@ -1,0 +1,12 @@
+runtime: java11
+env: standard
+service: storage
+runtime_config:
+  jdk: openjdk11
+env_variables:
+  ACTIVE_PROFILE: prod
+handlers:
+  - url: /.*
+    script: this field is required, but ignored
+manual_scaling:
+  instances: 1

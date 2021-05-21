@@ -1,0 +1,11 @@
+runtime: java11
+env: standard
+service: bot
+runtime_config:
+  jdk: openjdk11
+  ACTIVE_PROFILE: prod
+handlers:
+  - url: /.*
+    script: this field is required, but ignored
+manual_scaling:
+  instances: 1
